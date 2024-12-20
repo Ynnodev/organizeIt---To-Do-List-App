@@ -106,7 +106,7 @@
         <section>
             <div class="main-div">
 
-                <button id="addTasks">Add Tasks</button>
+                <button id="addTasks">Add Tasks</button><button id="showInDone">Show in Done</button>
                 <button id="removeTasks">Remove Tasks</button>
 
                 <div class="to-do-list">
@@ -141,6 +141,7 @@
     <script>
         const addTasksBtn = document.getElementById('addTasks');
         const removeTasksBtn = document.getElementById('removeTasks');
+        const showInDoneBtn = document.getElementById('showInDoneBtn');
         const ulToDo = document.getElementById('ulToDo');
         const ulDone = document.getElementById('ulDone');
 
@@ -158,7 +159,7 @@
                 saveTasksToLocalStorage()
             });
 
-            newLiItem.style.listStyleType = `none`
+            newLiItem.style.listStyleType = `none`;
             newLiItem.appendChild(taskDiv);
             taskDiv.appendChild(removeBtn);
             ulToDo.appendChild(newLiItem);
@@ -211,6 +212,10 @@
                 alert('There are no tasks to remove');
             }
         });
+
+        showInDoneBtn.addEventListener('click', function(){
+            
+        })
 
         function saveTasksToLocalStorage(){
             const tasks = Array.from(ulToDo.querySelectorAll('li .task')).map(task => task.textContent.replace('Remove Task', '').trim())
