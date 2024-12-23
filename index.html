@@ -3,98 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List</title>
-    <style>
-        *{
-            box-sizing: border-box;
-            margin: 0px;
-            padding: 0px;
-        }
-
-        .main-div{
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .to-do-list{
-            width: 80%;
-            height: 80%;
-            display: flex;
-            justify-content: center;
-            background-color: rgb(187, 187, 187);
-            border: 2px solid black;
-            border-radius: 10px;
-        }
-
-        .to-do{
-            width: 50%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: red;
-            border-top-left-radius: 10px;
-            border-end-start-radius: 10px;
-        }
-
-        .done{
-            width: 50%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: rgb(0, 233, 0);
-            border-top-right-radius: 10px;
-            border-end-end-radius: 10px;
-        }
-
-        h2{
-            font-family: Arial, Helvetica, sans-serif;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .tasks{
-            width: 95%;
-            height: 95%;
-            background-color: azure;
-            border-radius: 10px;
-        }
-
-        .ul{
-            padding: 10px;
-        }
-
-        .task{
-            width: 100%;
-            height: 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 2px solid black;
-            border-radius: 100px;
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 15px;
-            margin-bottom: 5px;
-        }
-
-        button{
-            border-radius: 10px;
-            border: 2px solid black;
-            background-color: azure;
-            padding: 8px 40px;
-            cursor: pointer;
-            transition: all 0.25s;
-        }
-
-        button:hover{
-            background-color: rgb(195, 204, 204);
-        }
-    </style>
+    <title>OrganizeIt -- Your To-Do List App</title>
 </head>
 
 <body>
@@ -106,8 +15,14 @@
         <section>
             <div class="main-div">
 
-                <button id="addTasks">Add Tasks</button><button id="showInDone">Show in Done</button>
-                <button id="removeTasks">Remove Tasks</button>
+                <div class="buttonsClass">
+                    <button id="addTasks">Add Tasks</button>
+                    <button id="showInDone">Show in Done</button>
+                    <button id="removeTasks">Remove Tasks</button>
+                    <button id="userPD">Fetch User Profile Data</button>
+                    <button id="saveToServer">Save tasks to Server</button>
+                    <button id="getFromLocal">Get tasks from local</button>
+                </div>
 
                 <div class="to-do-list">
                     <div class="to-do">
@@ -138,95 +53,7 @@
 
     </footer>
 
-    <script>
-        const addTasksBtn = document.getElementById('addTasks');
-        const removeTasksBtn = document.getElementById('removeTasks');
-        const showInDoneBtn = document.getElementById('showInDoneBtn');
-        const ulToDo = document.getElementById('ulToDo');
-        const ulDone = document.getElementById('ulDone');
-
-        function createTask(taskTitle){
-            const newLiItem = document.createElement("li");
-            const taskDiv = document.createElement("div");
-            const removeBtn = document.createElement("button");
-
-            taskDiv.classList.add('task');
-            taskDiv.textContent = taskTitle;
-
-            removeBtn.textContent = `Remove Task`;
-            removeBtn.addEventListener('click', function(){
-                ulToDo.removeChild(newLiItem);
-                saveTasksToLocalStorage()
-            });
-
-            newLiItem.style.listStyleType = `none`;
-            newLiItem.appendChild(taskDiv);
-            taskDiv.appendChild(removeBtn);
-            ulToDo.appendChild(newLiItem);
-        }
-
-        addTasksBtn.addEventListener('click', function(){
-            const removeTaskBtn = document.createElement("button")
-            const newLiItem = document.createElement("li")
-            const newTaskInput = document.createElement("input");
-            removeTaskBtn.textContent = `Remove Task`
-            newTaskInput.type = `text`;
-            newTaskInput.placeholder = ``
-
-            ulToDo.appendChild(newTaskInput);
-            newTaskInput.focus();
-
-            //When Enter is pressed, the task is created
-            newTaskInput.addEventListener('keydown', function(event){
-                if (event.key === "Enter"){
-
-                    const inputValue = newTaskInput.value.trim();
-
-                    if (inputValue !== ""){
-                        createTask(inputValue)
-                        saveTasksToLocalStorage();
-                        newTaskInput.remove();
-                    }else{
-                        alert("Digite algo!")
-                        newTaskInput.focus();
-                    }
-                }
-            });
-
-            //Removes the inline items
-            removeTaskBtn.addEventListener('click', function(){
-                if (ulToDo.querySelector('li')){
-                    ulToDo.removeChild(newLiItem);
-                }else{
-                    alert('There are no items to remove');
-                }
-            });
-        });
-
-        removeTasksBtn.addEventListener('click', function () {
-            if (ulToDo.children.length > 0) {
-                while (ulToDo.firstChild) {
-                    ulToDo.removeChild(ulToDo.firstChild);
-                }
-            } else {
-                alert('There are no tasks to remove');
-            }
-        });
-
-        showInDoneBtn.addEventListener('click', function(){
-            
-        })
-
-        function saveTasksToLocalStorage(){
-            const tasks = Array.from(ulToDo.querySelectorAll('li .task')).map(task => task.textContent.replace('Remove Task', '').trim())
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-        }
-
-        function loadTasksTolocalStorage(){
-            const tasks = JSON.parse(localStorage.getItem('tasks')) || []
-            tasks.forEach(taskText => createTask(taskText))
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
