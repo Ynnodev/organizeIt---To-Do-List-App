@@ -209,3 +209,43 @@ function loadTasksTolocalStorage(){
     const tasks = JSON.parse(localStorage.getItem('tasks')) || []
     tasks.forEach(taskText => createTask(taskText));
 }
+
+//Working with arrays
+
+const occupations = ['Programmer', 'Lawyer', 'Entrepreneur'];
+const words = ['words', 'sonic', 'hedgehog', 'tails', 'knuckles'];
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const onlyEven = numbers.filter(each => each % 2 == 0);
+const doubleNumbers = numbers.map(each => each * 2);
+const tenPlus = numbers.every(each => each > 10);
+
+const cart = [
+    {
+        item: 'Laptop',
+        branch: 'Dell',
+        price: 1000
+    },
+
+    {
+        item: 'Videogame',
+        branch: 'Sony',
+        price: 300
+    }
+]
+
+const longestWord = words.reduce((longest, current) => {
+    if (current.length > longest){
+        return current;
+    }else{
+        return longest;
+    }
+}, '');
+
+occupations.push('Firefighter');
+occupations.shift();
+occupations.unshift('Policeman');
+console.log(occupations);
+
+console.log(onlyEven);
+console.log(doubleNumbers);
+console.log(tenPlus);
