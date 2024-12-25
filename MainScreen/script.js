@@ -4,6 +4,7 @@ const showInDoneBtn = document.getElementById('showInDone');
 const userPDBtn = document.getElementById('userPD');
 const getFromLocalBtn = document.getElementById('getFromLocal');
 const saveToServerBtn = document.getElementById('saveToServer');
+const alphOrderBtn = document.getElementById('alphOrder');
 const ulToDo = document.getElementById('ulToDo');
 const ulDone = document.getElementById('ulDone');
 
@@ -161,6 +162,15 @@ getFromLocalBtn.addEventListener('click', function(){
             })
 });
 
+alphOrderBtn.addEventListener('click', function(){
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    const sortedTasks = tasks.sort((a, b) => a.localeCompare(b))
+    ulToDo.innerHTML = "";
+    sortedTasks.forEach(task => {
+        createTask(task);
+    })
+});
+
 function fetchUserProfileData(userID){
     return new Promise((resolve, reject) => {
         const users = [
@@ -201,7 +211,10 @@ userPDBtn.addEventListener('click', function(){
 });
 
 function saveTasksToLocalStorage(){
-    const tasks = Array.from(ulToDo.querySelectorAll('li .task')).map(task => task.textContent.replace('Remove Task', '').trim())
+    const tasks = Array.from(ulToDo.querySelectorAll('li .task')).map(task => task.textContent
+        .replace('Remove Task', '')
+        .replace('Set Reminder', '')
+        .trim())
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
@@ -232,6 +245,12 @@ const cart = [
         price: 300
     }
 ]
+
+const total = cart.reduce((total, item) => {
+    return total + item.price;
+}, 0)
+
+console.log(total);
 
 const longestWord = words.reduce((longest, current) => {
     if (current.length > longest){
