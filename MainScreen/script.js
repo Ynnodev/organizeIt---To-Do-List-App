@@ -7,12 +7,19 @@ const saveToServerBtn = document.getElementById('saveToServer');
 const alphOrderBtn = document.getElementById('alphOrder');
 const ulToDo = document.getElementById('ulToDo');
 const ulDone = document.getElementById('ulDone');
+const setImportance = true;
 
 function createTask(taskTitle){
     const newLiItem = document.createElement("li");
     const taskDiv = document.createElement("div");
     const removeBtn = document.createElement("button");
     const setReminderBtn = document.createElement("button");
+    const importanceLvl = window.prompt(`Type the importance level of your task: 
+        1 - Very important
+        2 - Important
+        3 - Not that important
+        4 - Not important`);
+    const number = Number(importanceLvl)
 
     taskDiv.classList.add('task');
     taskDiv.textContent = taskTitle;
@@ -49,6 +56,21 @@ function createTask(taskTitle){
                 console.log(error)
             })
     });
+
+    //Importance Level (Tweks to be done in: Get From Local Button)
+    if (setImportance){
+        if (number == 1){
+            taskDiv.style.backgroundColor = `red`
+        }else if (number == 2){
+            taskDiv.style.backgroundColor = `yellow`
+        }else if (number == 3){
+            taskDiv.style.backgroundColor = `cyan`
+        }else if (number == 4){
+            taskDiv.style.backgroundColor = `white`
+        }else{
+            alert('Inalid number, please, type a valid number');
+        }
+    }
 
     newLiItem.style.listStyleType = `none`;
     newLiItem.appendChild(taskDiv);
@@ -223,48 +245,15 @@ function loadTasksTolocalStorage(){
     tasks.forEach(taskText => createTask(taskText));
 }
 
-//Working with arrays
+//Modal Prototype
+const dialog = document.getElementById('dialog');
+const button = document.getElementById('button');
+const closeBtn = document.getElementById('closeDialog');
 
-const occupations = ['Programmer', 'Lawyer', 'Entrepreneur'];
-const words = ['words', 'sonic', 'hedgehog', 'tails', 'knuckles'];
-const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const onlyEven = numbers.filter(each => each % 2 == 0);
-const doubleNumbers = numbers.map(each => each * 2);
-const tenPlus = numbers.every(each => each > 10);
+button.addEventListener('click', function(){
+    dialog.showModal();
+});
 
-const cart = [
-    {
-        item: 'Laptop',
-        branch: 'Dell',
-        price: 1000
-    },
-
-    {
-        item: 'Videogame',
-        branch: 'Sony',
-        price: 300
-    }
-]
-
-const total = cart.reduce((total, item) => {
-    return total + item.price;
-}, 0)
-
-console.log(total);
-
-const longestWord = words.reduce((longest, current) => {
-    if (current.length > longest){
-        return current;
-    }else{
-        return longest;
-    }
-}, '');
-
-occupations.push('Firefighter');
-occupations.shift();
-occupations.unshift('Policeman');
-console.log(occupations);
-
-console.log(onlyEven);
-console.log(doubleNumbers);
-console.log(tenPlus);
+closeBtn.addEventListener('click', function(){
+    dialog.close();
+});
