@@ -34,6 +34,7 @@
             <div class="main-div">
 
                 <div class="buttonsClass">
+                    <button id="createNewTask">Create New Task</button>
                     <button id="addTasks">Add Tasks</button>
                     <button id="showInDone">Show in Done</button>
                     <button id="removeTasks">Remove Tasks</button>
@@ -72,13 +73,24 @@
 
     </footer>
 
-    <button id="button">Open Dialog</button>
-
-    <dialog id="dialog" class="modal">
+    <dialog id="createTaskForm" class="modal">
         <h2>New Task</h2>
 
         <div class="modal-content">
-            
+            <div class="inputs-and-labels">
+                <label class="label">Task Name: </label>
+                <br><input id="taskTitleInput" class="input-text" type="text" placeholder="Enter the name of your task">
+
+                <h3>Importace Degree: </h3>
+                        <input id="radio1" class="radio" type="radio" value="level1" name="importance"><label for="radio1"> Level 1</label>
+                <br><br><input id="radio2" class="radio" type="radio" value="level2" name="importance"><label for="radio2"> Level 2</label>
+                <br><br><input id="radio3" class="radio" type="radio" value="level3" name="importance"><label for="radio3"> Level 3</label>
+                <br><br><input id="radio4" class="radio" type="radio" value="level4" name="importance"><label for="radio4"> Level 4</label>
+
+                <h3>Define Deadline: </h3>
+                <input id="DLyes" type="radio" value="DLyes" name="deadline"><label for="DLyes"> Yes</label>
+                <input id="DLno" type="radio" value="DLno" name="deadline"><label for="DLno"> No</label>
+            </div>
         </div>
 
         <div class="buttons-modal">

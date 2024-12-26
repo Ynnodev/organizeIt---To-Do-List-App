@@ -1,3 +1,6 @@
+//Contants
+const createNewTaskBtn = document.getElementById('createNewTask');
+const createTaskForm = document.getElementById('createTaskForm');
 const addTasksBtn = document.getElementById('addTasks');
 const removeTasksBtn = document.getElementById('removeTasks');
 const showInDoneBtn = document.getElementById('showInDone');
@@ -9,17 +12,27 @@ const ulToDo = document.getElementById('ulToDo');
 const ulDone = document.getElementById('ulDone');
 const setImportance = true;
 
-function createTask(taskTitle){
+function createTask(taskTitle, importanceLevel){
     const newLiItem = document.createElement("li");
     const taskDiv = document.createElement("div");
     const removeBtn = document.createElement("button");
     const setReminderBtn = document.createElement("button");
-    const importanceLvl = window.prompt(`Type the importance level of your task: 
-        1 - Very important
-        2 - Important
-        3 - Not that important
-        4 - Not important`);
-    const number = Number(importanceLvl)
+    
+    if (taskTitleInput.value == ""){
+        alert("Enter the name of your task, please!");
+        taskTitleInput.focus();
+        return;
+    }
+
+    if (importanceLevel == 1){
+        taskDiv.style.backgroundColor = `red`;
+    }else if (importanceLevel == 2){
+        taskDiv.style.backgroundColor = `yellow`;
+    }else if (importanceLevel == 3){
+        taskDiv.style.backgroundColor = `cyan`;
+    }else if (importanceLevel == 4){
+        taskDiv.style.backgroundColor = `white`;
+    }
 
     taskDiv.classList.add('task');
     taskDiv.textContent = taskTitle;
@@ -57,27 +70,35 @@ function createTask(taskTitle){
             })
     });
 
-    //Importance Level (Tweks to be done in: Get From Local Button)
-    if (setImportance){
-        if (number == 1){
-            taskDiv.style.backgroundColor = `red`
-        }else if (number == 2){
-            taskDiv.style.backgroundColor = `yellow`
-        }else if (number == 3){
-            taskDiv.style.backgroundColor = `cyan`
-        }else if (number == 4){
-            taskDiv.style.backgroundColor = `white`
-        }else{
-            alert('Inalid number, please, type a valid number');
-        }
-    }
-
     newLiItem.style.listStyleType = `none`;
     newLiItem.appendChild(taskDiv);
     taskDiv.appendChild(removeBtn);
-    taskDiv.appendChild(setReminderBtn);
     ulToDo.appendChild(newLiItem);
 }
+
+const createTaskBtn = document.getElementById('createTask');
+createTaskBtn.addEventListener('click', function(){
+    const taskTitleInput = document.getElementById('taskTitleInput');
+    const taskTitle = taskTitleInput.value;
+    const importanceLevel = getImportanceLevel();
+
+    createTask(taskTitle, importanceLevel);
+    taskTitleInput.value = "";
+    resetAllRadio();
+    createTaskForm.close();
+});
+
+createNewTaskBtn.addEventListener('click', function(){
+    createTaskForm.showModal();
+});
+
+const closeModalBtn = document.getElementById('closeDialog');
+closeModalBtn.addEventListener('click', function(){
+    const taskTitleInput = document.getElementById('taskTitleInput');
+    createTaskForm.close();
+    taskTitleInput.value = "";
+    resetAllRadio();
+});
 
 addTasksBtn.addEventListener('click', function(){
     const removeTaskBtn = document.createElement("button")
@@ -91,7 +112,7 @@ addTasksBtn.addEventListener('click', function(){
     newTaskInput.focus();
 
     //When Enter is pressed, the task is created
-    newTaskInput.addEventListener('keydown', function(event){
+ /*   newTaskInput.addEventListener('keydown', function(event){
         if (event.key === "Enter"){
 
             const inputValue = newTaskInput.value.trim();
@@ -105,7 +126,7 @@ addTasksBtn.addEventListener('click', function(){
                 newTaskInput.focus();
             }
         }
-    });
+    }); */
 
     //Removes the inline items
     removeTaskBtn.addEventListener('click', function(){
@@ -153,10 +174,6 @@ showInDoneBtn.addEventListener('click', function(){
             })
 
             .catch((error) => {console.log(error)})
-});
-
-saveToServerBtn.addEventListener('click', function(){
-    
 });
 
 getFromLocalBtn.addEventListener('click', function(){
@@ -232,6 +249,22 @@ userPDBtn.addEventListener('click', function(){
         })
 });
 
+function getImportanceLevel(){
+    if (document.getElementById('radio1').checked) return 1;
+    if (document.getElementById('radio2').checked) return 2;
+    if (document.getElementById('radio3').checked) return 3;
+    if (document.getElementById('radio4').checked) return 4;
+    return null;
+}
+
+function resetAllRadio(){
+    const radioButtons = document.getElementsByClassName('radio');
+
+    for (let i = 0; i < radioButtons.length; i++){
+        radioButtons[i].checked = false;
+    }
+}
+
 function saveTasksToLocalStorage(){
     const tasks = Array.from(ulToDo.querySelectorAll('li .task')).map(task => task.textContent
         .replace('Remove Task', '')
@@ -244,16 +277,3 @@ function loadTasksTolocalStorage(){
     const tasks = JSON.parse(localStorage.getItem('tasks')) || []
     tasks.forEach(taskText => createTask(taskText));
 }
-
-//Modal Prototype
-const dialog = document.getElementById('dialog');
-const button = document.getElementById('button');
-const closeBtn = document.getElementById('closeDialog');
-
-button.addEventListener('click', function(){
-    dialog.showModal();
-});
-
-closeBtn.addEventListener('click', function(){
-    dialog.close();
-});

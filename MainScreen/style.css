@@ -162,6 +162,33 @@ button:hover{
     margin: auto;
     background-color: white;
     border-radius: 10px;
+    font-family: Poppins-R;
+    transition: all 0.25s;
+}
+
+.modal-content{
+    width: 100%;
+    height: fit-content;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-text{
+    width: 50%;
+    height: 30px;
+    padding: 8px 10px;
+    border-radius: 100px;
+    border: 1px solid gray;
+    transition: all 0.25s;
+}
+
+.input-text:focus{
+    box-shadow: 0px 0px 10px rgb(50, 50, 255);
+}
+
+.input-text::placeholder{
+    font-family: Poppins-R;
 }
 
 .buttons-modal{
@@ -170,4 +197,19 @@ button:hover{
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+
+.buttons-modal button{
+    font-family: Poppins-M;
+    transition: all 0.25s;
+}
+
+.buttons-modal #closeDialog:hover{
+    background-color: rgb(255, 25, 25);
+    color: white;
+}
+
+.buttons-modal #createTask:hover{
+    background-color: rgb(0, 224, 0);
+    color: white;
 }
